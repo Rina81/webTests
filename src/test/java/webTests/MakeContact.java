@@ -1,13 +1,12 @@
 package webTests;
-
+import java.util.List;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-//import org.openqa.selenium.chrome.ChromeDriver; -to test with chrome
+//import org.openqa.selenium.chrome.ChromeDriver;// --to test with chrome
 import org.testng.annotations.*;
 
 public class MakeContact {
@@ -20,8 +19,8 @@ public class MakeContact {
         this.wd = new FirefoxDriver();
 
         //System.setProperty("webdriver.chrome.driver", "c:\\Tools\\chromedriver.exe");
-        // this.driver = new ChromeDriver();
-        this.wd.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        //this.wd = new ChromeDriver();
+        this.wd.manage().timeouts().implicitlyWait(8000, TimeUnit.SECONDS);
         this.wd.get("https://localhost/addressbook/");
         login("admin", "secret");
     }
@@ -45,30 +44,36 @@ public class MakeContact {
 
     }
 
-    private void returntohomePage() {
+    public void returntohomePage() {
         wd.findElement(By.linkText("home page")).click();
+
     }
 
-    private void submitContact() {
-        wd.findElement(By.xpath("//div[@id='content']/form/input[21]")).click();
+    public void submitContact() {
+        wd.findElement(By.name("Submit")).click();
     }
 
-    private void completeContactForm(ContactData contactData) {
+    public void completeContactForm(ContactData contactData) throws InterruptedException {
         wd.findElement(By.name("firstname")).click();
         wd.findElement(By.name("firstname")).clear();
         wd.findElement(By.name("firstname")).sendKeys(contactData.getFirstName());
+        wd.wait(30000);
         wd.findElement(By.name("lastname")).click();
         wd.findElement(By.name("lastname")).clear();
         wd.findElement(By.name("lastname")).sendKeys(contactData.getLastname());
+        wd.wait(30000);
         wd.findElement(By.name("nickname")).click();
         wd.findElement(By.name("nickname")).clear();
         wd.findElement(By.name("nickname")).sendKeys(contactData.getNickname());
+        wd.wait(30000);
         wd.findElement(By.name("mobile")).click();
         wd.findElement(By.name("mobile")).clear();
         wd.findElement(By.name("mobile")).sendKeys(contactData.getMobile());
+        wd.wait(30000);
         wd.findElement(By.name("email")).click();
         wd.findElement(By.name("email")).clear();
         wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
+        wd.wait(30000);
     }
 
     private void gotoAddContact() {
